@@ -1,0 +1,11 @@
+version: 1
+project:
+  name: "hyundai ams"
+  version: "1.0.0"
+  build:
+    commands:
+      - npm install
+      - npm run build
+  deploy:
+    commands:
+      - cp -r build/* /home/hyunda42/public_html/
