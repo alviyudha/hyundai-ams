@@ -7,6 +7,9 @@ import warrantyReducer from "./warranty/reducer";
 import highlightVehiclesReducer from "./highlightVehicles/reducer";
 import tabTypeCarsReducer from "./tabtypecars/reducer";
 import vehicleColorsReducer from "./vehicleColors/reducer";
+import contactReducer from "./contact/reducer";
+import servicesReducer from "./services/reducer";
+import testDriveReducer from "./testDrive/reducer";
 
 const store = configureStore({
     reducer: {
@@ -17,7 +20,10 @@ const store = configureStore({
         warranty: warrantyReducer,
         Highlight: highlightVehiclesReducer,
         tabtypeCar: tabTypeCarsReducer,
-        vehicleColor: vehicleColorsReducer
+        vehicleColor: vehicleColorsReducer,
+        contact: contactReducer,
+        service: servicesReducer,
+        testDrive: testDriveReducer,
     },
   });
   

@@ -44,7 +44,7 @@ export const authSlice = createSlice({
     name: "auth",
     initialState,
     reducers:{
-        reset : (state) => initialState,
+        reset : () => initialState,
         setErrorMessage: (state, action) => {
             state.isError = true;
             state.message = action.payload;
