@@ -1,5 +1,4 @@
-import React from 'react';
-import { FaExclamationTriangle } from 'react-icons/fa';
+import { FaExclamationTriangle } from "react-icons/fa";
 
 const ErrorPage = () => {
   return (
@@ -10,7 +9,8 @@ const ErrorPage = () => {
           Oops! Something Went Wrong
         </h1>
         <p className="text-hyundai dark:text-gray-300 mb-6">
-          We’re sorry, but the page you’re looking for doesn’t exist or an unexpected error occurred.
+          We’re sorry, but the page you’re looking for doesn’t exist or an
+          unexpected error occurred.
         </p>
         <a
           href="/"

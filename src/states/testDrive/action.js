@@ -1,13 +1,13 @@
 import { getAPI } from "../../libs/api";
 
 // Action Types
-export const FETCH_DEALERS_REQUEST = 'testDrive/FETCH_DEALERS_REQUEST';
-export const FETCH_DEALERS_SUCCESS = 'testDrive/FETCH_DEALERS_SUCCESS';
-export const FETCH_DEALERS_FAILURE = 'testDrive/FETCH_DEALERS_FAILURE';
+export const FETCH_DEALERS_REQUEST = "testDrive/FETCH_DEALERS_REQUEST";
+export const FETCH_DEALERS_SUCCESS = "testDrive/FETCH_DEALERS_SUCCESS";
+export const FETCH_DEALERS_FAILURE = "testDrive/FETCH_DEALERS_FAILURE";
 
-export const FETCH_VEHICLES_REQUEST = 'testDrive/FETCH_VEHICLES_REQUEST';
-export const FETCH_VEHICLES_SUCCESS = 'testDrive/FETCH_VEHICLES_SUCCESS';
-export const FETCH_VEHICLES_FAILURE = 'testDrive/FETCH_VEHICLES_FAILURE';
+export const FETCH_VEHICLES_REQUEST = "testDrive/FETCH_VEHICLES_REQUEST";
+export const FETCH_VEHICLES_SUCCESS = "testDrive/FETCH_VEHICLES_SUCCESS";
+export const FETCH_VEHICLES_FAILURE = "testDrive/FETCH_VEHICLES_FAILURE";
 
 // Action Creators
 export const fetchDealersRequest = () => ({
@@ -42,7 +42,7 @@ export const fetchVehiclesFailure = (error) => ({
 export const fetchDealers = () => async (dispatch) => {
   dispatch(fetchDealersRequest());
   try {
-    const response = await getAPI('dealer');
+    const response = await getAPI("dealer");
     dispatch(fetchDealersSuccess(response));
   } catch (error) {
     dispatch(fetchDealersFailure(error.message));
@@ -52,7 +52,7 @@ export const fetchDealers = () => async (dispatch) => {
 export const fetchVehicles = () => async (dispatch) => {
   dispatch(fetchVehiclesRequest());
   try {
-    const response = await getAPI('vehicles');
+    const response = await getAPI("vehicles");
     dispatch(fetchVehiclesSuccess(response));
   } catch (error) {
     dispatch(fetchVehiclesFailure(error.message));

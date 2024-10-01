@@ -10,6 +10,7 @@ import vehicleColorsReducer from "./vehicleColors/reducer";
 import contactReducer from "./contact/reducer";
 import servicesReducer from "./services/reducer";
 import testDriveReducer from "./testDrive/reducer";
+import authUserReducer from "./login/reducer";
 
 const store = configureStore({
     reducer: {
@@ -24,6 +25,7 @@ const store = configureStore({
         contact: contactReducer,
         service: servicesReducer,
         testDrive: testDriveReducer,
+        authUser: authUserReducer
     },
   });
   

@@ -1,4 +1,4 @@
-import { SET_WARRANTY_IMAGE } from './action';
+import { SET_WARRANTY_IMAGE } from "./action";
 
 const initialState = {
   warrantyImage: null,

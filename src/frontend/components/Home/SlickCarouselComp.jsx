@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-export default function SlickCarouselComp({ type, carsData }) {
+function SlickCarouselComp({ carsData }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const navigate = useNavigate();
 
@@ -26,22 +27,22 @@ export default function SlickCarouselComp({ type, carsData }) {
         breakpoint: 600,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
+          slidesToScroll: 1,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const formatNumber = (number) => {
-    return new Intl.NumberFormat('en-US').format(number)
-  }
+    return new Intl.NumberFormat("en-US").format(number);
+  };
 
   const slidesData = React.useMemo(() => {
     if (carsData.length > 0) {
@@ -70,11 +71,13 @@ export default function SlickCarouselComp({ type, carsData }) {
 
   const handleClick = () => {
     const vehicle = slidesData[currentSlide];
-    navigate(`/models/${vehicle.Link}`, { state: { id: vehicle.uuid, trimId: vehicle.trimId } });
+    navigate(`/models/${vehicle.Link}`, {
+      state: { id: vehicle.uuid, trimId: vehicle.trimId },
+    });
   };
 
   return (
-    <div id='slideCars'>
+    <div id="slideCars">
       <div className="bg-color-pruduct">
         <div className="container p-5 mb-5">
           <Slider {...settings}>
@@ -91,38 +94,83 @@ export default function SlickCarouselComp({ type, carsData }) {
           <div className="row justify-content-center">
             <div className="col-md-2">
               <ul>
-                <li><p className='text-color-primary'>{slidesData[currentSlide].year}</p></li>
-                <li><p className='fs-5 text-uppercase text-color-primary fw-bolder'>{slidesData[currentSlide].model}</p></li>
-                <li><p className='text-color-primary'>{slidesData[currentSlide].type}</p></li>
-              </ul>
-            </div>
-            <div className="col-md-2">
-            <ul>
-                <li><p className='fw-medium'>Price</p></li>
-                <li><p className='text-color-primary fw-bold'>{formatNumber(slidesData[currentSlide].otrPrice)}</p></li>
-              </ul>
-            </div>
-            <div className="col-md-2">
-              <ul>
-                <li><p className='fw-medium'>{slidesData[currentSlide].headTitle1}</p></li>
-                <li><p className='text-color-primary fw-bold'>{slidesData[currentSlide].text1}</p></li>
-              </ul>
-            </div>
-            <div className="col-md-2">
-              <ul>
-                <li><p className='fw-medium'>{slidesData[currentSlide].headTitle2}</p></li>
-                <li><p className='text-color-primary fw-bold'>{slidesData[currentSlide].text2}</p></li>
+                <li>
+                  <p className="text-color-primary">
+                    {slidesData[currentSlide].year}
+                  </p>
+                </li>
+                <li>
+                  <p className="fs-5 text-uppercase text-color-primary fw-bolder">
+                    {slidesData[currentSlide].model}
+                  </p>
+                </li>
+                <li>
+                  <p className="text-color-primary">
+                    {slidesData[currentSlide].type}
+                  </p>
+                </li>
               </ul>
             </div>
             <div className="col-md-2">
               <ul>
-                <li><p className='fw-medium'>{slidesData[currentSlide].headTitle3}</p></li>
-                <li><p className='text-color-primary fw-bold'>{slidesData[currentSlide].text3}</p></li>
+                <li>
+                  <p className="fw-medium">Price</p>
+                </li>
+                <li>
+                  <p className="text-color-primary fw-bold">
+                    {formatNumber(slidesData[currentSlide].otrPrice)}
+                  </p>
+                </li>
               </ul>
             </div>
             <div className="col-md-2">
               <ul>
-                <button className="custom-btn btn-12" onClick={handleClick}><span>Click!</span><span>Read More</span></button>
+                <li>
+                  <p className="fw-medium">
+                    {slidesData[currentSlide].headTitle1}
+                  </p>
+                </li>
+                <li>
+                  <p className="text-color-primary fw-bold">
+                    {slidesData[currentSlide].text1}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div className="col-md-2">
+              <ul>
+                <li>
+                  <p className="fw-medium">
+                    {slidesData[currentSlide].headTitle2}
+                  </p>
+                </li>
+                <li>
+                  <p className="text-color-primary fw-bold">
+                    {slidesData[currentSlide].text2}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div className="col-md-2">
+              <ul>
+                <li>
+                  <p className="fw-medium">
+                    {slidesData[currentSlide].headTitle3}
+                  </p>
+                </li>
+                <li>
+                  <p className="text-color-primary fw-bold">
+                    {slidesData[currentSlide].text3}
+                  </p>
+                </li>
+              </ul>
+            </div>
+            <div className="col-md-2">
+              <ul>
+                <button className="custom-btn btn-12" onClick={handleClick}>
+                  <span>Click!</span>
+                  <span>Read More</span>
+                </button>
               </ul>
             </div>
           </div>
@@ -131,3 +179,26 @@ export default function SlickCarouselComp({ type, carsData }) {
     </div>
   );
 }
+SlickCarouselComp.propTypes = {
+  type: PropTypes.string.isRequired,
+  carsData: PropTypes.arrayOf(
+    PropTypes.shape({
+      uuid: PropTypes.string.isRequired,
+      model: PropTypes.string.isRequired,
+      type: PropTypes.string.isRequired,
+      year: PropTypes.number.isRequired,
+      otrPrice: PropTypes.number.isRequired,
+      urlImgView: PropTypes.string.isRequired,
+      Link: PropTypes.string.isRequired,
+      trimId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+      headTitle1: PropTypes.string,
+      headTitle2: PropTypes.string,
+      headTitle3: PropTypes.string,
+      text1: PropTypes.string,
+      text2: PropTypes.string,
+      text3: PropTypes.string,
+    })
+  ).isRequired,
+};
+
+export default SlickCarouselComp;

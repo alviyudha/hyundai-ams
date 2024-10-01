@@ -1,11 +1,10 @@
-// reducer.js
-import { SET_COLORS_DATA, SET_CURRENT_COLOR } from './action';
+import { SET_COLORS_DATA, SET_CURRENT_COLOR } from "./action";
 
 const initialState = {
   colorsData: [],
-  currentImage: '',
-  currentBackgroundColor: '',
-  currentDescColor: '',
+  currentImage: "",
+  currentBackgroundColor: "",
+  currentDescColor: "",
 };
 
 const vehicleColorsReducer = (state = initialState, action) => {

@@ -1,5 +1,4 @@
-// reducer.js
-import { SET_VEHICLES } from './action';
+import { SET_VEHICLES } from "./action";
 
 const initialState = {
   vehicles: [],

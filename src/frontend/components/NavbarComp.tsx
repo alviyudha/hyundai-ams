@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const navItems = [
   { label: "Home", link: "/" },
@@ -38,18 +38,25 @@ const NavbarComp = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <nav className={`bg-white w-full shadow-md mb-1 sticky ${isScrolled ? 'top-0 z-20' : ''}`}>
+    <nav
+      className={`bg-white w-full shadow-md mb-1 sticky ${
+        isScrolled ? "top-0 z-20" : ""
+      }`}
+    >
       <div className="container mx-auto p-3 flex justify-between items-center">
         <div className="flex-shrink-0">
           <Link to="/">
-          
-          <img src="/HYU_Logo_Horizontal_Warna_Biru.png" alt="Hyundai-AMS" className="h-6" />
+            <img
+              src="/HYU_Logo_Horizontal_Warna_Biru.png"
+              alt="Hyundai-AMS"
+              className="h-6"
+            />
           </Link>
         </div>
 
@@ -80,7 +87,10 @@ const NavbarComp = () => {
                   )}
                 </div>
               ) : (
-                <a href={item.link} className="text-neutral-400 hover:text-gray-600">
+                <a
+                  href={item.link}
+                  className="text-neutral-400 hover:text-gray-600"
+                >
                   {item.label}
                 </a>
               )}
@@ -90,7 +100,10 @@ const NavbarComp = () => {
 
         {/* Icon Menu Mobile */}
         <div className="md:hidden flex items-center">
-          <button onClick={toggleMenu} className="text-neutral-400 focus:outline-none">
+          <button
+            onClick={toggleMenu}
+            className="text-neutral-400 focus:outline-none"
+          >
             {isMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
           </button>
         </div>
@@ -129,7 +142,10 @@ const NavbarComp = () => {
                   )}
                 </div>
               ) : (
-                <a href={item.link} className="block px-4 py-2 text-neutral-400 hover:bg-gray-100">
+                <a
+                  href={item.link}
+                  className="block px-4 py-2 text-neutral-400 hover:bg-gray-100"
+                >
                   {item.label}
                 </a>
               )}

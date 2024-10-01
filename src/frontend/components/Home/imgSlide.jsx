@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types';
-import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi';
+import PropTypes from "prop-types";
+import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
 import { Zoom } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 
-const ImgSlide = ({ images = [] }) => { 
+const ImgSlide = ({ images = [] }) => {
   const zoomInProperties = {
     scale: 1,
     duration: 5000,
@@ -25,7 +25,10 @@ const ImgSlide = ({ images = [] }) => {
     <div className="w-full">
       <Zoom {...zoomInProperties}>
         {images.map((image, index) => (
-          <div key={index} className="flex justify-center md:items-center items-start w-screen relative">
+          <div
+            key={index}
+            className="flex justify-center md:items-center items-start w-screen relative"
+          >
             <img
               src={image.urlImage}
               className="w-full h-auto"
@@ -36,7 +39,7 @@ const ImgSlide = ({ images = [] }) => {
       </Zoom>
     </div>
   );
-}
+};
 
 ImgSlide.propTypes = {
   images: PropTypes.arrayOf(

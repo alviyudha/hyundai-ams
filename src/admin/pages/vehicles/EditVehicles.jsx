@@ -1,10 +1,9 @@
-import React from 'react'
-import FormEditVehicles from '../../components/vehicles/FormEditVehicles'
+import FormEditVehicles from "../../components/vehicles/FormEditVehicles";
 
 export default function EditVehicles() {
   return (
     <div>
-        <FormEditVehicles />
+      <FormEditVehicles />
     </div>
-  )
+  );
 }

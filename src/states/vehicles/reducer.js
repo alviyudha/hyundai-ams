@@ -2,14 +2,14 @@ import {
   FETCH_MODELS_REQUEST,
   FETCH_MODELS_SUCCESS,
   FETCH_MODELS_FAILURE,
-} from './action';
+} from "./action";
 
 const initialState = {
   models: [],
   loading: false,
   error: null,
 };
- 
+
 const modelsReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_MODELS_REQUEST:

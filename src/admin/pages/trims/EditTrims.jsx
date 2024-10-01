@@ -1,8 +1,9 @@
-import React from 'react'
-import FormEditTrims from '../../components/trims/FormEditTrims'
+import FormEditTrims from "../../components/trims/FormEditTrims";
 
 export default function EditTrims() {
   return (
-    <div><FormEditTrims /></div>
-  )
+    <div>
+      <FormEditTrims />
+    </div>
+  );
 }
