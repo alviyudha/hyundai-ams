@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { getAPI, updateAPI } from '../../../libs/api';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { getAPI, updateAPI } from "../../../libs/api";
 
-export default function FormEditColors({ backgroundColor, setBackgroundColor }) {
+import PropTypes from "prop-types";
+
+function FormEditColors({ backgroundColor, setBackgroundColor }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [color, setColor] = useState({
-    backgroundColor: '',
-    descColor: '',
-    trimId: '',
+    backgroundColor: "",
+    descColor: "",
+    trimId: "",
     colorsImage: null,
   });
   const [vehicles, setVehicles] = useState([]);
-  const [trimId, setTrimId] = useState('');
-  const [error, setError] = useState('');
+  const [trimId, setTrimId] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchColor = async () => {
@@ -22,18 +24,18 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
         setColor(colorData);
         setTrimId(colorData.trimId);
       } catch (error) {
-        console.error('Error fetching color:', error);
-        setError('Error fetching color data.');
+        console.error("Error fetching color:", error);
+        setError("Error fetching color data.");
       }
     };
 
     const fetchVehicles = async () => {
       try {
-        const vehiclesData = await getAPI('vehicles');
+        const vehiclesData = await getAPI("vehicles");
         setVehicles(vehiclesData);
       } catch (error) {
-        console.error('Error fetching vehicles:', error);
-        setError('Error fetching vehicle data.');
+        console.error("Error fetching vehicles:", error);
+        setError("Error fetching vehicle data.");
       }
     };
 
@@ -47,32 +49,32 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
       setColor({ ...color, [name]: files[0] });
     } else {
       setColor({ ...color, [name]: value });
-      if (name === 'backgroundColor') {
+      if (name === "backgroundColor") {
         setBackgroundColor(value);
       }
     }
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  const formData = new FormData();
-  formData.append('backgroundColor', color.backgroundColor);
-  formData.append('descColor', color.descColor);
-  formData.append('trimId', trimId);
-  if (color.colorsImage) {
-    formData.append('colorsImage', color.colorsImage);
-  }
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("backgroundColor", color.backgroundColor);
+    formData.append("descColor", color.descColor);
+    formData.append("trimId", trimId);
+    if (color.colorsImage) {
+      formData.append("colorsImage", color.colorsImage);
+    }
 
-  try {
-    await updateAPI('color', id, formData, {
-      'Content-Type': 'multipart/form-data',
-    });
-    navigate('/admin-hyundai/colors');
-  } catch (error) {
-    console.error('Error updating color:', error);
-    setError('Failed to update color.');
-  }
-};
+    try {
+      await updateAPI("color", id, formData, {
+        "Content-Type": "multipart/form-data",
+      });
+      navigate("/admin-hyundai/colors");
+    } catch (error) {
+      console.error("Error updating color:", error);
+      setError("Failed to update color.");
+    }
+  };
 
   useEffect(() => {
     setColor((prevColor) => ({
@@ -88,7 +90,12 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
         {error && <div className="mb-4 text-red-500">{error}</div>}
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="backgroundColor">Background Color</label>
+            <label
+              className="block text-gray-700 mb-2"
+              htmlFor="backgroundColor"
+            >
+              Background Color
+            </label>
             <input
               type="text"
               id="backgroundColor"
@@ -100,7 +107,9 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="descColor">Description</label>
+            <label className="block text-gray-700 mb-2" htmlFor="descColor">
+              Description
+            </label>
             <input
               type="text"
               id="descColor"
@@ -112,7 +121,9 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="trimId">Vehicle</label>
+            <label className="block text-gray-700 mb-2" htmlFor="trimId">
+              Vehicle
+            </label>
             <select
               id="trimId"
               name="trimId"
@@ -122,7 +133,9 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
               disabled
               hidden
             >
-              <option value="" disabled>Select a vehicle</option>
+              <option value="" disabled>
+                Select a vehicle
+              </option>
               {vehicles.map((vehicle) => (
                 <option key={vehicle.id} value={vehicle.id}>
                   {vehicle.model} ({vehicle.year})
@@ -131,7 +144,9 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
             </select>
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="colorsImage">Colors Image</label>
+            <label className="block text-gray-700 mb-2" htmlFor="colorsImage">
+              Colors Image
+            </label>
             <input
               type="file"
               id="colorsImage"
@@ -140,9 +155,20 @@ export default function FormEditColors({ backgroundColor, setBackgroundColor }) 
               className="w-full px-3 py-2 border rounded"
             />
           </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded">Update Color</button>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded"
+          >
+            Update Color
+          </button>
         </form>
       </div>
     </div>
   );
 }
+FormEditColors.propTypes = {
+  backgroundColor: PropTypes.string.isRequired,
+  setBackgroundColor: PropTypes.func.isRequired,
+};
+
+export default FormEditColors;

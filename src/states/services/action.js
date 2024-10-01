@@ -1,11 +1,9 @@
-// states/services/action.js
-
-import { getAPI } from '../../libs/api';
+import { getAPI } from "../../libs/api";
 
 // Action Types
-export const FETCH_DEALERS_REQUEST = 'FETCH_DEALERS_REQUEST';
-export const FETCH_DEALERS_SUCCESS = 'FETCH_DEALERS_SUCCESS';
-export const FETCH_DEALERS_FAILURE = 'FETCH_DEALERS_FAILURE';
+export const FETCH_DEALERS_REQUEST = "FETCH_DEALERS_REQUEST";
+export const FETCH_DEALERS_SUCCESS = "FETCH_DEALERS_SUCCESS";
+export const FETCH_DEALERS_FAILURE = "FETCH_DEALERS_FAILURE";
 
 // Action Creators
 export const fetchDealersRequest = () => ({
@@ -27,7 +25,7 @@ export const fetchDealers = () => {
   return async (dispatch) => {
     dispatch(fetchDealersRequest());
     try {
-      const data = await getAPI('dealer');
+      const data = await getAPI("dealer");
       dispatch(fetchDealersSuccess(data));
     } catch (error) {
       dispatch(fetchDealersFailure(error.message));

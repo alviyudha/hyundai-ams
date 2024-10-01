@@ -1,0 +1,17 @@
+[33mcommit 16238d3f702d798d992aeea315afba963c09bf2e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mci/cd[m[33m, [m[1;31morigin/ci/cd[m[33m)[m
+Author: alviyudha <alviyudha@gmail.com>
+Date:   Mon Sep 30 10:57:00 2024 +0700
+
+    add .cpanel.yml
+
+[33mcommit 817d0df4253b7d073f7a6d1db9c5a2f44aa13544[m
+Author: alviyudha <alviyudha@gmail.com>
+Date:   Mon Sep 30 10:43:53 2024 +0700
+
+    add redux state to frontend
+
+[33mcommit 622fc0c9c55df7913aa556e3e09934146ee87295[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: alviyudha <alviyudha@gmail.com>
+Date:   Mon Sep 30 09:59:26 2024 +0700
+
+    first commit

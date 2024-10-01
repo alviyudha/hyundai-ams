@@ -1,5 +1,4 @@
-// states/contact/reducer.js
-import { SET_CONTACT_DEALERS } from './action';
+import { SET_CONTACT_DEALERS } from "./action";
 
 const initialState = {
   dealers: [],

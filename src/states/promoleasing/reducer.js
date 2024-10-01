@@ -1,4 +1,4 @@
-import { SET_PROMO_LEASING_DATA } from './action';
+import { SET_PROMO_LEASING_DATA } from "./action";
 
 const initialState = {
   promoLeasingData: null,

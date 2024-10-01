@@ -1,10 +1,9 @@
-import React from 'react'
-import FormAddDealer from '../../components/dealer/FormAddDealer'
+import FormAddDealer from "../../components/dealer/FormAddDealer";
 
 export default function AddDealer() {
   return (
     <div>
-        <FormAddDealer />
+      <FormAddDealer />
     </div>
-  )
+  );
 }

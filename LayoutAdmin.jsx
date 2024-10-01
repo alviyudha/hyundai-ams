@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './src/admin/components/Sidebar';
-import useAuthGuard from './src/features/useAuthGuard';
+// import useAuthGuard from './src/features/useAuthGuard';
 // import Navbar from './components/Navbar';
 
 const LayoutAdmin = () => {
-  useAuthGuard();
+  // useAuthGuard();
   const [collapsed, setCollapsed] = useState(false);
 
   const toggleCollapsed = () => {

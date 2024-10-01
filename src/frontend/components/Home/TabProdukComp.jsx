@@ -1,16 +1,20 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
-import SlickCarouselComp from './SlickCarouselComp';
-import LoadingSpinner from '../LoadingSpinner';
-import { getAPI } from '../../../libs/api';
-import { fetchCarsFailure, fetchCarsRequest, fetchCarsSuccess } from '../../../states/tabProduct/action';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import SlickCarouselComp from "./SlickCarouselComp";
+import LoadingSpinner from "../LoadingSpinner";
+import { getAPI } from "../../../libs/api";
+import {
+  fetchCarsFailure,
+  fetchCarsRequest,
+  fetchCarsSuccess,
+} from "../../../states/tabProduct/action";
 
 const filterUniqueModels = (data) => {
   const uniqueModels = {};
-  data.forEach(vehicle => {
+  data.forEach((vehicle) => {
     if (!uniqueModels[vehicle.model]) {
       uniqueModels[vehicle.model] = vehicle;
     }
@@ -19,7 +23,9 @@ const filterUniqueModels = (data) => {
 };
 
 export default function TabProdukComp() {
-  const { carsData, loading, activeKey } = useSelector((state) => state.tabProduk);
+  const { carsData, loading, activeKey } = useSelector(
+    (state) => state.tabProduk
+  );
   const dispatch = useDispatch();
 
   const fetchData = async (typecar) => {
@@ -29,30 +35,30 @@ export default function TabProdukComp() {
       const filteredData = filterUniqueModels(response);
       dispatch(fetchCarsSuccess(filteredData));
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
       dispatch(fetchCarsFailure(error));
     }
   };
 
   useEffect(() => {
-    fetchData('ev');
+    fetchData("ev");
   }, [dispatch]);
 
   const handleSelect = (key) => {
-    dispatch({ type: 'SET_ACTIVE_KEY', payload: key });
+    dispatch({ type: "SET_ACTIVE_KEY", payload: key });
     let typecar;
     switch (key) {
-      case 'Electrified':
-        typecar = 'ev';
+      case "Electrified":
+        typecar = "ev";
         break;
-      case 'SUV':
-        typecar = 'suv';
+      case "SUV":
+        typecar = "suv";
         break;
-      case 'MPV':
-        typecar = 'mpv';
+      case "MPV":
+        typecar = "mpv";
         break;
       default:
-        typecar = 'ev';
+        typecar = "ev";
     }
     fetchData(typecar);
   };
@@ -62,7 +68,12 @@ export default function TabProdukComp() {
   }
 
   return (
-    <div id="tabProduct" data-aos="zoom-out-right" data-aos-duration="1000" className='mb-5 container shadow-sm p-5'>
+    <div
+      id="tabProduct"
+      data-aos="zoom-out-right"
+      data-aos-duration="1000"
+      className="mb-5 container shadow-sm p-5"
+    >
       <Tabs
         activeKey={activeKey}
         onSelect={handleSelect}

@@ -1,10 +1,9 @@
-import React from 'react'
-import FormAddVehicles from '../../components/vehicles/FormAddVehicles'
+import FormAddVehicles from "../../components/vehicles/FormAddVehicles";
 
 export default function AddVehicle() {
   return (
     <div>
-        <FormAddVehicles />
+      <FormAddVehicles />
     </div>
-  )
+  );
 }

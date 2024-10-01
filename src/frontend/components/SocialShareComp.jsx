@@ -1,13 +1,15 @@
-/* eslint-disable no-unused-vars */
-import { faInstagram, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
-import { faArrowUp, faGear, faRoadCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { faInstagram, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import {
+  faArrowUp,
+  faGear,
+  faRoadCircleCheck,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function SocialShareComp() {
-  
-  const [showScrollButton, setShowScrollButton] = useState(false);
+  const [setShowScrollButton] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,16 +20,16 @@ export default function SocialShareComp() {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const scrollToTop = (event) => {
     event.preventDefault();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -37,31 +39,49 @@ export default function SocialShareComp() {
           <li>
             <a href="#" onClick={scrollToTop}>
               <span>Scroll up</span>
-              <span><FontAwesomeIcon icon={faArrowUp} size="2xl" /></span>
+              <span>
+                <FontAwesomeIcon icon={faArrowUp} size="2xl" />
+              </span>
             </a>
           </li>
           <li>
-            <a href="https://www.instagram.com/hyundaiams.id/" target='_blank' rel="noreferrer">
+            <a
+              href="https://www.instagram.com/hyundaiams.id/"
+              target="_blank"
+              rel="noreferrer"
+            >
               <span>Instagram</span>
-              <span><FontAwesomeIcon icon={faInstagram} size="2xl" /></span>
+              <span>
+                <FontAwesomeIcon icon={faInstagram} size="2xl" />
+              </span>
             </a>
           </li>
           <li>
-            <a href="https://wa.me/+6281290008526" target='_blank' rel="noreferrer">
+            <a
+              href="https://wa.me/+6281290008526"
+              target="_blank"
+              rel="noreferrer"
+            >
               <span>WhatsApp</span>
-              <span><FontAwesomeIcon icon={faWhatsapp} size="2xl" /></span>
+              <span>
+                <FontAwesomeIcon icon={faWhatsapp} size="2xl" />
+              </span>
             </a>
           </li>
           <li>
             <Link to="/services">
               <span>Service</span>
-              <span><FontAwesomeIcon icon={faGear} size="2xl" /></span>
+              <span>
+                <FontAwesomeIcon icon={faGear} size="2xl" />
+              </span>
             </Link>
           </li>
           <li>
             <Link to="/test-drive">
               <span>Test Drive</span>
-              <span><FontAwesomeIcon icon={faRoadCircleCheck} size="2xl" /></span>
+              <span>
+                <FontAwesomeIcon icon={faRoadCircleCheck} size="2xl" />
+              </span>
             </Link>
           </li>
         </ul>
