@@ -47,7 +47,7 @@ export default function TrimsList() {
   };
 
   return (
-    <div className="container mx-auto p-1">
+    <div className="ps-10 mx-auto">
       <div className="flex justify-end mb-4">
         <Link
           to="add"

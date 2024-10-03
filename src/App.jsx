@@ -37,33 +37,49 @@ import LayoutAdmin from "../LayoutAdmin";
 import LoginPage from "./admin/pages/login/LoginPage";
 import DashboardPage from "./admin/pages/dashboard/DashboardPage";
 import UnderMaintenance from "./frontend/components/Undermaintance";
-import ProtectedRoute from "./admin/components/ProtectRoute";
+import { useDispatch, useSelector } from "react-redux";
+import api from "./utils/api";
+import { setAuthUserActionCreator } from "./states/login/action";
 
 function App() {
-  const [authUser, setAuthUser] = useState(null);
   const [loading, setLoading] = useState(true);
-
+  const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.authUser);
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      setAuthUser(true);
-    }
-    setLoading(false);
     AOS.init({
       duration: 2000,
     });
   }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      api.putAccessToken(token);
+      api
+        .getOwnProfile()
+        .then((user) => {
+          dispatch(setAuthUserActionCreator(user));
+          setLoading(false);
+        })
+        .catch((error) => {
+          if (error.response && error.response.data.msg === "jwt expired") {
+            localStorage.removeItem("token");
+          }
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, [dispatch]);
 
   if (loading) {
-    return [];
+    return <div>Loading...</div>;
   }
 
   return (
     <Router>
       <div>
-        {/* Admin Routes */}
         <Routes>
-          {/* Cek jika pengguna sudah login, arahkan ke dashboard */}
           <Route
             path="/admin-hyundai"
             element={
@@ -74,19 +90,17 @@ function App() {
               )
             }
           />
-          <Route element={<LayoutAdmin />}>
+          <Route element={<LayoutAdmin authUser={authUser} />}>
             {authUser ? (
               <>
                 <Route
                   path="/admin-hyundai/dashboard"
                   element={<DashboardPage />}
                 />
-                {/* <Route element={<ProtectedRoute requiredRole="ADMIN" />}> */}
                 <Route
                   path="/admin-hyundai/vehicles"
                   element={<VehicleList />}
                 />
-                {/* </Route> */}
                 <Route
                   path="/admin-hyundai/vehicles/add"
                   element={<AddVehicle />}
@@ -148,7 +162,7 @@ function App() {
               <Route
                 path="/admin-hyundai/*"
                 element={<Navigate to="/admin-hyundai" />}
-              /> // Redirect ke login jika belum login
+              />
             )}
           </Route>
           {/* Frontend Routes */}

@@ -22,7 +22,7 @@ const LayoutFE = () => {
       ) : (
         <div>
           <NavbarComp />
-          <SocialShareComp />
+          {/* <SocialShareComp /> */}
           <main> 
             <Outlet />
           </main>

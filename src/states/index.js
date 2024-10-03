@@ -11,6 +11,7 @@ import contactReducer from "./contact/reducer";
 import servicesReducer from "./services/reducer";
 import testDriveReducer from "./testDrive/reducer";
 import authUserReducer from "./login/reducer";
+import sidebarReducer from "./sidebar/reducer";
 
 const store = configureStore({
     reducer: {
@@ -25,7 +26,8 @@ const store = configureStore({
         contact: contactReducer,
         service: servicesReducer,
         testDrive: testDriveReducer,
-        authUser: authUserReducer
+        authUser: authUserReducer,
+        sidebar: sidebarReducer,
     },
   });
   

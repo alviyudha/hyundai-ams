@@ -31,7 +31,7 @@ export default function DealerList() {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="ps-10 mx-auto">
       <h2 className="text-2xl font-bold mb-4">Dealer List</h2>
       <div className="mb-4">
         <Link
