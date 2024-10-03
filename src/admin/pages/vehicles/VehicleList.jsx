@@ -29,7 +29,7 @@ export default function VehicleList() {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className=" mx-auto ps-4">
             <div className="flex justify-end mb-4">
                 <Link to="add" className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-300">
                     Add Data

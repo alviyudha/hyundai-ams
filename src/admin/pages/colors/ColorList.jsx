@@ -1,16 +1,20 @@
 import { useEffect, useState } from "react";
-
 import { Link } from "react-router-dom";
 import { deleteAPI, getAPI } from "../../../libs/api";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 export default function ColorList() {
   const [colors, setColors] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     const fetchColors = async () => {
       try {
         const data = await getAPI("colormodel");
         setColors(data);
+        setTotalPages(Math.ceil(data.length / itemsPerPage));
       } catch (error) {
         console.error("Error fetching colors:", error);
       }
@@ -30,8 +34,22 @@ export default function ColorList() {
     }
   };
 
+  const indexOfLastColor = currentPage * itemsPerPage;
+  const indexOfFirstColor = indexOfLastColor - itemsPerPage;
+  const currentColors = colors
+    .sort((a, b) => b.id - a.id)
+    .slice(indexOfFirstColor, indexOfLastColor);
+
+  const handlePageChange = (direction) => {
+    if (direction === "next" && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    } else if (direction === "prev" && currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
-    <div className="container mx-auto p-1">
+    <div className="ps-10">
       <div className="flex justify-end mb-4">
         <Link
           to="add"
@@ -54,7 +72,7 @@ export default function ColorList() {
               </tr>
             </thead>
             <tbody>
-              {colors.map((color) => (
+              {currentColors.map((color) => (
                 <tr key={color.id}>
                   <td className="py-2 border-b text-center">
                     <img
@@ -89,6 +107,25 @@ export default function ColorList() {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className="flex justify-center items-center mt-4 space-x-4">
+        <button
+          onClick={() => handlePageChange("prev")}
+          disabled={currentPage === 1}
+          className="bg-blue-600 text-white px-2 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200"
+        >
+          <FaArrowLeft />
+        </button>
+        <span className="text-gray-700">
+          Page {currentPage} of {totalPages}
+        </span>
+        <button
+          onClick={() => handlePageChange("next")}
+          disabled={currentPage === totalPages}
+          className="bg-blue-600 text-white px-2 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200"
+        >
+          <FaArrowRight />
+        </button>
       </div>
     </div>
   );
