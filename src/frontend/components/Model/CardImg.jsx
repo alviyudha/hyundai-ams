@@ -37,7 +37,7 @@ function CardImg({ models, loading }) {
               height={300}
             />
             <h3 className="uppercase text-hyundai font-semibold">
-              {vehicle.model}
+              {vehicle.Link}
             </h3>
           </div>
         </div>
