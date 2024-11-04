@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom';
 import NavbarComp from './src/frontend/components/NavbarComp';
 import LoadingPage from './src/frontend/pages/LoadingPage';
 import FooterComp from './src/frontend/components/FooterComp';
-import SocialShareComp from './src/frontend/components/SocialShareComp';
 const LayoutFE = () => {
   const [isLoading, setIsLoading] = useState(true);
 

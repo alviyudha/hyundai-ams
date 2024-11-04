@@ -72,8 +72,7 @@
 // export default api;
 
 const api = (() => {
-  const BASE_URL = import.meta.env.VITE_APP_BASE_API; // Pastikan ini benar
-
+  const BASE_URL = import.meta.env.VITE_APP_BASE_API; 
   function getAccessToken() {
     return localStorage.getItem("accessToken");
   }
