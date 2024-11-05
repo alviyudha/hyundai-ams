@@ -4,7 +4,18 @@ const axiosInstance = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
   withCredentials: true,
 });
-
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 export const getAPI = async (resource, params = {}) => {
   try {
     const response = await axiosInstance.get(resource, { params });
@@ -38,7 +49,7 @@ export const updateAPI = async (resource, id, data) => {
 export const postAPI = async (resource, data, headers = {}) => {
   try {
     const response = await axiosInstance.post(resource, data, { headers });
-    return response; 
+    return response;
   } catch (error) {
     console.error("Error posting data:", error);
     throw error;
