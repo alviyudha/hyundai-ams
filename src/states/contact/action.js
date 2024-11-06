@@ -10,7 +10,7 @@ export const setContactDealers = (dealers) => ({
 export const fetchContactDealers = () => {
   return async (dispatch) => {
     try {
-      const dealers = await getAPI("dealer");
+      const dealers = await getAPI("dealer/");
       dispatch(setContactDealers(dealers));
     } catch (error) {
       console.error("Failed to fetch dealer data:", error);
