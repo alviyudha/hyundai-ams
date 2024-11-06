@@ -40,6 +40,8 @@ import UnderMaintenance from "./frontend/components/Undermaintance";
 import { useDispatch, useSelector } from "react-redux";
 import api from "./utils/api";
 import { setAuthUserActionCreator } from "./states/login/action";
+import CookieConsentComp from "./frontend/components/CookieConsent";
+import PrivacyPolicy from "./frontend/pages/PrivacyPolicy";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -51,9 +53,10 @@ function App() {
     });
   }, []);
   useEffect(() => {
+    const isOnAdminRoute = window.location.pathname.startsWith("/admin-hyundai");
     const token = localStorage.getItem("accessToken");
 
-    if (token) {
+    if (isOnAdminRoute && token) {
       api.putAccessToken(token);
       api
         .getOwnProfile()
@@ -63,7 +66,7 @@ function App() {
         })
         .catch((error) => {
           if (error.response && error.response.data.msg === "jwt expired") {
-            localStorage.removeItem("token");
+            localStorage.removeItem("accessToken");
           }
           setLoading(false);
         });
@@ -77,9 +80,25 @@ function App() {
   }
 
   return (
+    <>
+    <CookieConsentComp />
     <Router>
       <div>
+        {/* Frontend Routes */}
         <Routes>
+          <Route element={<LayoutFE />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/models" element={<ModelsPage />} />
+            <Route path="/models/:id" element={<ModelDetails />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/test-drive" element={<TestDrive />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/maintenance" element={<UnderMaintenance />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+
+          {/* Admin Routes */}
           <Route
             path="/admin-hyundai"
             element={
@@ -109,7 +128,10 @@ function App() {
                   path="/admin-hyundai/vehicles/edit/:id"
                   element={<EditVehicles />}
                 />
-                <Route path="/admin-hyundai/colors" element={<ColorList />} />
+                <Route
+                  path="/admin-hyundai/colors"
+                  element={<ColorList />}
+                />
                 <Route
                   path="/admin-hyundai/colors/add"
                   element={<AddColors />}
@@ -142,7 +164,10 @@ function App() {
                   path="/admin-hyundai/specifications/edit/:id"
                   element={<EditSpecifications />}
                 />
-                <Route path="/admin-hyundai/dealers" element={<DealerList />} />
+                <Route
+                  path="/admin-hyundai/dealers"
+                  element={<DealerList />}
+                />
                 <Route
                   path="/admin-hyundai/dealers/add"
                   element={<AddDealer />}
@@ -152,7 +177,10 @@ function App() {
                   element={<EditDealer />}
                 />
                 <Route path="/admin-hyundai/trims" element={<TrimsList />} />
-                <Route path="/admin-hyundai/trims/add" element={<AddTrims />} />
+                <Route
+                  path="/admin-hyundai/trims/add"
+                  element={<AddTrims />}
+                />
                 <Route
                   path="/admin-hyundai/trims/edit/:id"
                   element={<EditTrims />}
@@ -165,20 +193,10 @@ function App() {
               />
             )}
           </Route>
-          {/* Frontend Routes */}
-          <Route element={<LayoutFE />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/models" element={<ModelsPage />} />
-            <Route path="/models/:id" element={<ModelDetails />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/test-drive" element={<TestDrive />} />
-            <Route path="/maintenance" element={<UnderMaintenance />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Route>
         </Routes>
       </div>
     </Router>
+  </>
   );
 }
 

@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDealers } from "../../states/services/action";
 import useInput from "../../hooks/useInput";
+import { postAPI } from "../../libs/api";
 
 function Services() {
   const dispatch = useDispatch();
@@ -10,41 +11,81 @@ function Services() {
   const [phone, handlePhoneChange] = useInput("");
   const [email, handleEmailChange] = useInput("");
   const [vehicleNumber, handleVehicleNumberChange] = useInput("");
-  const [vehicleType, handleVehicleTypeChange] = useInput("Ioniq 6");
+  const [vehicleType, handleVehicleTypeChange] = useInput("");
   const [serviceDate, handleServiceDateChange] = useInput("");
   const [address, handleAddressChange] = useInput("");
+  const [inputMessage, handleInputMessageChange] = useInput("");
   const [selectedDealer, handleSelectedDealerChange] = useInput("");
+
+  const [isConsentChecked, setIsConsentChecked] = useState(false);
+  const [isPrivacyChecked, setIsPrivacyChecked] = useState(false);
 
   useEffect(() => {
     dispatch(fetchDealers());
   }, [dispatch]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const dealer = dealers.find((d) => d.id === parseInt(selectedDealer));
     const whatsappNumber = dealer?.whatsapp;
 
-    if (whatsappNumber) {
-      const message = `
-        Nama: ${name}
-        Telepon: ${phone}
-        Email: ${email}
-        Nomor Kendaraan: ${vehicleNumber}
-        Jenis Kendaraan: ${vehicleType}
-        Jadwal Service: ${serviceDate}
-        Dealer: ${dealer.name}
-        Alamat: ${address}
-      `;
+    // Data to be sent to the backend
+    const payload = {
+      name,
+      email,
+      telp: phone,
+      nopol: vehicleNumber,
+      carModel: vehicleType,
+      dealer: dealer?.name,
+      dateInput: serviceDate,
+      inputMessage,
+      catMessage: "services",
+      address,
+      consentStatus: isConsentChecked,
+      ipAddress: await fetchIpAddress(),
+    };
 
-      const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-        message
-      )}`;
-      window.open(whatsappLink, "_blank");
-    } else {
-      console.error("Dealer WhatsApp number not found.");
+    try {
+      // Post data to /messageuser endpoint
+      const response = await postAPI("/messageuser", payload);
+      if (response.status === 201) {
+        console.log("Data saved successfully");
+
+        // Prepare and open WhatsApp link
+        const message = `
+          Nama: ${name}
+          Telepon: ${phone}
+          Email: ${email}
+          Nomor Kendaraan: ${vehicleNumber}
+          Jenis Kendaraan: ${vehicleType}
+          Jadwal Service: ${serviceDate}
+          Dealer: ${dealer?.name}
+          Alamat: ${address},
+          Isi Pesan: ${inputMessage},
+        `;
+        const whatsappLink = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+          message
+        )}`;
+        window.open(whatsappLink, "_blank");
+      } else {
+        console.error("Failed to save data.");
+      }
+    } catch (error) {
+      console.error("Error saving data:", error);
     }
   };
-
+  const fetchIpAddress = async () => {
+    // Fetch user's IP address from an IP service if necessary
+    try {
+      const response = await fetch("https://api64.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Failed to fetch IP address:", error);
+      return null;
+    }
+  };
+  const isSubmitDisabled = !(isConsentChecked && isPrivacyChecked);
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -127,7 +168,7 @@ function Services() {
               id="vehicleNumber"
               name="vehicleNumber"
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-hyundai focus:border-hyundai"
-              placeholder="B 1234 XYZ"
+              placeholder="A 123 AMS"
               value={vehicleNumber}
               onChange={handleVehicleNumberChange}
               required
@@ -141,18 +182,16 @@ function Services() {
             >
               Jenis Kendaraan
             </label>
-            <select
-              id="vehicleType"
-              name="vehicleType"
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-hyundai focus:border-hyundai rounded-md"
+            <input
+              type="text"
+              id="vehicleNumber"
+              name="vehicleNumber"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-hyundai focus:border-hyundai"
+              placeholder="Santa FE"
               value={vehicleType}
               onChange={handleVehicleTypeChange}
               required
-            >
-              <option value="Ioniq 6">Ioniq 6</option>
-              <option value="Ioniq 5">Ioniq 5</option>
-              <option value="Santa Fe">Santa Fe</option>
-            </select>
+            />
           </div>
 
           <div>
@@ -185,6 +224,9 @@ function Services() {
               onChange={handleSelectedDealerChange}
               required
             >
+              <option value="" disabled>
+                - Pilih Dealer -
+              </option>
               {dealers.map((dealer) => (
                 <option key={dealer.id} value={dealer.id}>
                   {dealer.name}
@@ -210,11 +252,71 @@ function Services() {
               required
             ></textarea>
           </div>
+          <div>
+            <label
+              htmlFor="address"
+              className="block font-medium text-gray-700"
+            >
+              Pesan
+            </label>
+            <textarea
+              id="inputMessage"
+              name="inputMessage"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-hyundai focus:border-hyundai"
+              placeholder="Isi pesan"
+              value={inputMessage}
+              onChange={handleInputMessageChange}
+              required
+            ></textarea>
+          </div>
+          {/* Input fields (Name, Phone, Email, etc.) */}
+          {/* Checkbox 1 */}
+          <div className="flex items-start">
+            <input
+              type="checkbox"
+              id="consentCheckbox"
+              className="mr-2"
+              checked={isConsentChecked}
+              onChange={(e) => setIsConsentChecked(e.target.checked)}
+            />
+            <label htmlFor="consentCheckbox" className="text-sm text-gray-700">
+              Dengan mencentang kotak ini, Saya memberikan persetujuan kepada
+              Dealer dan Distributor untuk mengumpulkan, mengolah, menyimpan,
+              mengirim dan memusnahkan data pribadi Saya untuk mendapatkan
+              seluruh layanan sesuai yang tercantum pada{" "}
+              <a href="/privacy-policy" className="text-red-600 underline">
+                Kebijakan Privasi{" "}
+              </a>{" "}
+              Halaman Situs Website Hyundai-AMS
+            </label>
+          </div>
 
+          {/* Checkbox 2 */}
+          <div className="flex items-start">
+            <input
+              type="checkbox"
+              id="privacyCheckbox"
+              className="mr-2"
+              checked={isPrivacyChecked}
+              onChange={(e) => setIsPrivacyChecked(e.target.checked)}
+            />
+            <label htmlFor="privacyCheckbox" className="text-sm text-gray-700">
+              Saya telah membaca dan menyetujui isi{" "}
+              <a href="/privacy-policy" className="text-red-600 underline">
+                Kebijakan Privasi{" "}
+              </a>{" "}
+              Halaman Situs Website Hyundai-AMS ini.
+            </label>
+          </div>
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-hyundai hover:bg-sky-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800"
+              disabled={isSubmitDisabled}
+              className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm font-medium text-white bg-hyundai ${
+                isSubmitDisabled
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "hover:bg-sky-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-800"
+              }`}
             >
               Submit
             </button>
