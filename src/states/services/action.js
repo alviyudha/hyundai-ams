@@ -25,7 +25,7 @@ export const fetchDealers = () => {
   return async (dispatch) => {
     dispatch(fetchDealersRequest());
     try {
-      const data = await getAPI("dealer");
+      const data = await getAPI("dealer/");
       dispatch(fetchDealersSuccess(data));
     } catch (error) {
       dispatch(fetchDealersFailure(error.message));

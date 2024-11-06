@@ -42,7 +42,7 @@ export const fetchVehiclesFailure = (error) => ({
 export const fetchDealers = () => async (dispatch) => {
   dispatch(fetchDealersRequest());
   try {
-    const response = await getAPI("dealer");
+    const response = await getAPI("dealer/");
     dispatch(fetchDealersSuccess(response));
   } catch (error) {
     dispatch(fetchDealersFailure(error.message));
