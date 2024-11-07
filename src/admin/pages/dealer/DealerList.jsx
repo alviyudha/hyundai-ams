@@ -11,7 +11,7 @@ export default function DealerList() {
 
   const fetchDealers = async () => {
     try {
-      const data = await getAPI("dealer");
+      const data = await getAPI("dealer/");
       setDealers(data);
     } catch (error) {
       console.error("Failed to load data:", error);

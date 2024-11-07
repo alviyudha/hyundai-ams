@@ -27,7 +27,7 @@ export default function FormAddImgSlide() {
       if (error.response && error.response.data && error.response.data.msg) {
         setErrorMsg(error.response.data.msg);
       } else {
-        setErrorMsg("Failed to create image slide.");
+        setErrorMsg(error.message);
       }
     }
   };
