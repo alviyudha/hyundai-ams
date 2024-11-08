@@ -16,7 +16,7 @@ export default function FormEditSpecifications() {
   const [trimId, setTrimId] = useState("");
   const [imgView, setImgView] = useState(null);
   const [imgUrl, setImgUrl] = useState(null);
-  const [vehicles, setVehicles] = useState([]);
+  // const [vehicles, setVehicles] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,15 +27,15 @@ export default function FormEditSpecifications() {
   };
 
   useEffect(() => {
-    const fetchVehicles = async () => {
-      try {
-        const data = await getAPI(`vehicles/${id}`);
-        setVehicles(data);
-      } catch (error) {
-        console.error("Error fetching vehicles:", error);
-        setErrorMsg("Failed to fetch vehicles.");
-      }
-    };
+    // const fetchVehicles = async () => {
+    //   try {
+    //     const vehiclesData = await getAPI("vehicles");
+    //     setVehicles(vehiclesData);
+    //   } catch (error) {
+    //     console.error("Error fetching vehicles:", error);
+    //     setErrorMsg("Failed to fetch vehicles.");
+    //   }
+    // };
 
     const fetchSpecificationById = async () => {
       try {
@@ -58,7 +58,6 @@ export default function FormEditSpecifications() {
       }
     };
 
-    fetchVehicles();
     fetchSpecificationById();
   }, [id]);
 
@@ -263,7 +262,7 @@ export default function FormEditSpecifications() {
           </div>
 
           {/* Vehicle Select */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <label className="block text-gray-700 mb-2" htmlFor="trimId">
               Vehicle
             </label>
@@ -284,7 +283,7 @@ export default function FormEditSpecifications() {
                 </option>
               ))}
             </select>
-          </div>
+          </div> */}
 
           {/* Image View */}
           <div className="mb-4">
